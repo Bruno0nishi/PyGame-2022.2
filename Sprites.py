@@ -7,6 +7,13 @@ game_over = False
 
 CHAO_ALTURA = 100
 
+#variaveis do jogo
+mexe_chao = 0
+vel_scroll = 4
+flying = False
+game_over = False
+
+
 CANO_WIDTH  = 90
 CANO_HEIGHT = 600
 cano_gap_inicio = 180
@@ -49,7 +56,7 @@ class Bird(pygame.sprite.Sprite):
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
 
-            #animação
+            #Animação
             self.counter += 1
             bate_asa = 5
 
@@ -67,59 +74,18 @@ class Bird(pygame.sprite.Sprite):
  
           
 class Cano(pygame.sprite.Sprite):
-    def __init__(self, invertido, x, y):
+    def __init__(self, x, y, position):
         pygame.sprite.Sprite.__init__(self)
-
-        self.cordocano = {pygame.transform.scale(pygame.image.load('img/pipe.png'), (CANO_WIDTH, CANO_HEIGHT))}
-
-        self.rect.center = [x, y]
-        self.invertido = invertido
-        self.image = self.cordocano
+        self.image = pygame.image.load('img/Pipe.png')
         self.rect = self.image.get_rect()
-        self.rect.left = screen_height-20
-        self.posicaox = 0
-
-        if self.invertido:
-            self.image = pygame.transform.flip(self.image,False,True)
-            self.rect.x  = - canonormal.rect.left
-            self.rect.y = - canonormal.rect.top + cano_gap
-
-        else:
-            self.posicaox = random.randint(cano_minimo+cano_gap, -CHAO_ALTURA-cano_minimo)
-            self.rect.top = self.posicaox
-
+        
+        if position == 1:
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect.bottomleft = [x, y - int(cano_gap / 2)]
+        if position == -1:
+            self.rect.topleft = [x, y + int(cano_gap / 2)]
 
     def update(self):
-
-        if self.invertido:
-            self.image = pygame.transform.flip(self.image,False,True)
-        self.movimentovertical()
-
-    def movimentovertical(self):
-        if self.invertido:
-            self.rect.left = canonormal.rect.left
-            self.rect.bottom = canonormal.rect.top - cano_gap
-        else:
-            self.rect.x += vel_jogo
-            if self.rect.right <= 0:
-                self.rect.left = screen_width
-                self.posicaox =  random.randint(cano_minimo+cano_gap, -CHAO_ALTURA-cano_minimo)
-            self.rect.top = self.posicaox
-
-    def jogardenovo(self):
-        if self.invertido:
-            self.rect.left = canonormal.rect.left
-            self.rect.bottom = canonormal.rect.top - cano_gap
-        else:
-            self.rect.left = -20
-            self.posicaox = random.randint(cano_minimo+cano_gap, -CHAO_ALTURA-cano_minimo)
-            self.rect.top = self.posicaox
-            
-all_sprites = pygame.sprite.Group()
-canos   = pygame.sprite.Group()
-canonormal = Cano(False)
-canoinvert = Cano(True)
-canos.add(canonormal)
-canos.add(canoinvert)
-
-all_sprites.add(canonormal)
+        self.rect.x -= vel_scroll
+        if self.rect.right < 0:
+            self.kill()
