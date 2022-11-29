@@ -146,7 +146,6 @@ while run:
         mexe_chao -= vel_jogo
         if abs(mexe_chao) > 35:
             mexe_chao = 0
-
         cano_group.update()
 
     for event in pygame.event.get():
