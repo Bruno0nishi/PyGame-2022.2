@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 from pygame.locals import *
 from Sprites import *
 import random
@@ -14,7 +15,9 @@ screen_height = 936
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Flapper Birb')
 
+
 font = pygame.font.SysFont('Bauhaus 93', 60)
+
 
 cor_fonte = (255, 255, 255)
 
@@ -33,8 +36,9 @@ bg = pygame.image.load('img/bg.png')
 ground_img = pygame.image.load('img/ground.png')
 Botao_img = pygame.image.load('img/restart.png')
 
-sound_type = ["sounds_jump/wav"]
+mixer.init()
 
+som_pulo = mixer.Sound("sounds_jump.wav")
 
 def fonte_pontuacao(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
@@ -78,8 +82,8 @@ class Bird(pygame.sprite.Sprite):
         if game_over == False:
             # Pulo
             if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                som_pulo.play()
                 self.clicked = True
-                
                 self.vel = -10
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
@@ -233,3 +237,4 @@ while run:
     pygame.display.update()
 
 pygame.quit()
+mixer.quit()
