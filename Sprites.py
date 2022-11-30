@@ -89,3 +89,24 @@ class Cano(pygame.sprite.Sprite):
         self.rect.x -= vel_scroll
         if self.rect.right < 0:
             self.kill()
+
+
+class Botao():
+    def __init__(self, x, y, image):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def draw(self):
+
+        action = False
+
+        posicao = pygame.mouse.get_pos()
+
+        if self.rect.collidepoint(posicao):
+            if pygame.mouse.get_pressed()[0] == 1:
+                action = True
+
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
