@@ -80,6 +80,7 @@ class Bird(pygame.sprite.Sprite):
                 self.vel = -10
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
+        
 
             # Animação
             self.counter += 1
@@ -208,13 +209,19 @@ while run:
             game_over = False
             score = reset_game()
 
-
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN and flying == False and game_over == False:
             flying = True
+
+
+    
+    '''def som_pulo(self):
+        self.som_pulo.play()
+        self.direction = -400'''
+        
+        
 
     pygame.display.update()
 
