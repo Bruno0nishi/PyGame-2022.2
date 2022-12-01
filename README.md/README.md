@@ -21,4 +21,4 @@ Jogo_v8: Som de jogos
 
 Fonte imagens : https://github.com/samuelcust/flappy-bird-assets.git
 
-vídeo jogo em funcionamento : 
+vídeo jogo em funcionamento : https://youtu.be/Fqdcfi_NMC8
